@@ -140,7 +140,7 @@ public class SelectableStackView: UIStackView {
     private func selectionObserver(_ selectable: SelectionObservableView) {
         selectable.handlingSelfSelection
             ? completeSelect(selectable)
-            : forcedlySelect(selectable.isSelected, selectable)
+            : forcedlySelect(!selectable.isSelected, selectable)
         latestAccessedIndex = self[selectable]
     }
     
