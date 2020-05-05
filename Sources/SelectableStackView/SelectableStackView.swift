@@ -148,7 +148,8 @@ public class SelectableStackView: UIStackView {
         if numberOfViewsSelected == 0 && !noSelectionAllowed {
             selectIfNeeded(true, selectable)
         } else if numberOfViewsSelected > 1 && !multipleSelectionAllowed {
-            selectLatest(false)
+            deselectAll()
+            selectIfNeeded(true, selectable)
         }
     }
     
@@ -162,9 +163,15 @@ public class SelectableStackView: UIStackView {
             selectable.isSelected = false
         } else {
             if !multipleSelectionAllowed {
-                selectLatest(false)
+                deselectAll()
             }
             selectable.isSelected = true
+        }
+    }
+    
+    private func deselectAll() {
+        typeCastedSubviews.forEach {
+            $0.isSelected = false
         }
     }
     
