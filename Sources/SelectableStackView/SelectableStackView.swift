@@ -116,7 +116,7 @@ public class SelectableStackView: UIStackView {
             logIfLogging("Failed to \(select ? "select" : "deselect") view at index \(index), because no view at given index was found")
             return
         }
-        forcedlySelect(selectable)
+        forcedlySelect(select, selectable)
         latestAccessedIndex = index
     }
     
@@ -140,7 +140,7 @@ public class SelectableStackView: UIStackView {
     private func selectionObserver(_ selectable: SelectionObservableView) {
         selectable.handlingSelfSelection
             ? completeSelect(selectable)
-            : forcedlySelect(selectable)
+            : forcedlySelect(selectable.isSelected, selectable)
         latestAccessedIndex = self[selectable]
     }
     
@@ -152,13 +152,13 @@ public class SelectableStackView: UIStackView {
         }
     }
     
-    private func forcedlySelect(_ selectable: SelectableView) {
-        if selectable.isSelected && numberOfViewsSelected == 1 && !noSelectionAllowed {
+    private func forcedlySelect(_ select: Bool, _ selectable: SelectableView) {
+        if !select && numberOfViewsSelected == 1 && !noSelectionAllowed {
             logIfLogging("Deselect failed, because no other views selected yet and no selection is disallowed")
             return
         }
         
-        if selectable.isSelected {
+        if !select {
             selectable.isSelected = false
         } else {
             if !multipleSelectionAllowed {
