@@ -2,7 +2,7 @@
 
 SelectableStackView is a customizable and easy to use UI element for showing and managing selectable elements in a stack written in Swift.
 
-![Preview](https://github.com/VladimirBrejcha/LoadingViewExample/blob/master/LoadingViewExample/preview.gif)
+![Preview](https://github.com/VladimirBrejcha/SelectableStackViewExample/blob/master/SelectableStackViewExample/preview.gif)
 
 ## Features
 
@@ -11,7 +11,7 @@ SelectableStackView is a customizable and easy to use UI element for showing and
 - [x] Automatically manages elements
 - [x] Allows to manually manage elements if needed
 - [x] Supports single/multiple selection states
-- [x] Can automatically handle zero selection case
+- [x] Can automatically handle no selection case
 - [x] Use in code or from interface builder
 
 ## Requirements
@@ -28,28 +28,29 @@ Use Xcode’s new Swift Packages option, which is located within the File menu.
 
 ## Usage example
 
-[ExampleApp](https://github.com/VladimirBrejcha/LoadingViewExample)
+[ExampleApp](https://github.com/VladimirBrejcha/SelectableStackViewExample)
 
+### Add an arranged subview
 ```Swift
 import SelectableStackView
+
+selectableStackView.addArrangedSubview(yourView) // make sure that your view conform to SelectionObservableView protocol
+```
+
+### Select an view from code
+```Swift
+import SelectableStackView
+
+selectableStackView.select(true, at: someIndex) // if view at given index doesnt exist, nothing will happen
 ```
 
 ## Advanced
-
-### Use your own animations instead of default PulsingCircleAnimation
-
-Create an animation and conform it to the [Animation](Sources/LoadingView/Animation.swift) protocol.
-Set the loadingAnimation property.
-```Swift
-loadingView.loadingAnimation = MyAnimation() // must conform to Animation protocol
-```
 
 ### Turn off logging
 
 ```Swift
 selectableStackView.loggingEnabled = false // disable logging if needed
 ```
-
 
 ## License
 
