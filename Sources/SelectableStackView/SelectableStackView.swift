@@ -66,6 +66,7 @@ public class SelectableStackView: UIStackView {
             super.addSubview(view)
             if !noSelectionAllowed && typeCastedSubviews.count == 1 {
                 selectIfNeeded(true, at: 0)
+                latestAccessedIndex = 0
             }
         } else {
             logIfLogging("addSubview failed. View must conform to SelectionObservableView protocol")
@@ -82,6 +83,7 @@ public class SelectableStackView: UIStackView {
             super.addArrangedSubview(view)
             if !noSelectionAllowed && typeCastedSubviews.count == 1 {
                 selectIfNeeded(true, at: 0)
+                latestAccessedIndex = 0
             }
         } else {
             logIfLogging("addArrangedSubview failed. View must conform to SelectionObservableView protocol")
@@ -100,6 +102,7 @@ public class SelectableStackView: UIStackView {
                     select(true, at: latest)
                 } else {
                     select(true, at: 0)
+                    latestAccessedIndex = 0
                 }
             }
         }
