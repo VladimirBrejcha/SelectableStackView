@@ -64,7 +64,7 @@ public class SelectableStackView: UIStackView {
         if let view = view as? SelectionObservableView {
             view.selectionObserver = selectionObserver(_ :)
             super.addSubview(view)
-            if !noSelectionAllowed && typeCastedSubviews.count == 1 {
+            if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
                 latestAccessedIndex = 0
             }
@@ -81,7 +81,7 @@ public class SelectableStackView: UIStackView {
         if let view = view as? SelectionObservableView {
             view.selectionObserver = selectionObserver(_ :)
             super.addArrangedSubview(view)
-            if !noSelectionAllowed && typeCastedSubviews.count == 1 {
+            if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
                 latestAccessedIndex = 0
             }
