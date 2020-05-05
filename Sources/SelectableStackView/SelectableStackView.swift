@@ -61,6 +61,22 @@ public class SelectableStackView: UIStackView {
         views.firstIndex { $0 == view }
     }
     
+    /// Add `view` to subviews
+    /// View must conform to `SelectionObservableView`
+    /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
+    /// Subscribes to `SelectionObservableView` `selectionObserver`
+    public override func addSubview(_ view: UIView) {
+        if let view = view as? SelectionObservableView {
+            view.selectionObserver = selectionObserver(_ :)
+            super.addSubview(view)
+            if !noSelectionAllowed && views.count == 1 {
+                selectIfNeeded(true, at: 0)
+            }
+        } else {
+            logIfLogging("addSubview failed. View must conform to SelectionObservableView protocol")
+        }
+    }
+    
     /// Add `view` to arrangedSubviews
     /// View must conform to `SelectionObservableView`
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
