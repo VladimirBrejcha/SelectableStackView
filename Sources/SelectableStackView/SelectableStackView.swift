@@ -15,7 +15,7 @@ public class SelectableStackView: UIStackView {
     public var noSelectionAllowed: Bool = false {
         didSet {
             if oldValue == noSelectionAllowed { return }
-            if oldValue == true && numberOfViesSelected == 0 {
+            if oldValue == true && numberOfViewsSelected == 0 {
                 if let latest = latestAccessedIndex {
                     select(true, at: latest)
                 } else {
@@ -33,8 +33,8 @@ public class SelectableStackView: UIStackView {
     public var multipleSelectionAllowed: Bool = false {
         didSet {
             if oldValue == multipleSelectionAllowed { return }
-            if oldValue == true && numberOfViesSelected > 1 {
-                views.forEach { $0.isSelected = false }
+            if oldValue == true && numberOfViewsSelected > 1 {
+                typeCastedSubviews.forEach { $0.isSelected = false }
                 selectLatest(true)
             }
         }
@@ -44,21 +44,16 @@ public class SelectableStackView: UIStackView {
     /// Default is `true`
     public var loggingEnabled: Bool = true
     
-    /// Access array of arrangedSubviews
-    public var views: [SelectionObservableView] {
-        get { self.arrangedSubviews as! [SelectionObservableView] }
-    }
-    
     /// Access arrangedSubview at `index`
-    /// Returns arrangedSubview with given index or nil
+    /// Returns subview with given index or nil
     public subscript(index: Index) -> SelectionObservableView? {
-        views.indices.contains(index) ? views[index] : nil
+        typeCastedSubviews.indices.contains(index) ? typeCastedSubviews[index] : nil
     }
     
     /// Access `index` of the `view`
-    /// Returns index of given view or nil
+    /// Returns index of given subview or nil
     public subscript(view: SelectionObservableView) -> Index? {
-        views.firstIndex { $0 == view }
+        typeCastedSubviews.firstIndex { $0 == view }
     }
     
     /// Add `view` to subviews
@@ -69,7 +64,7 @@ public class SelectableStackView: UIStackView {
         if let view = view as? SelectionObservableView {
             view.selectionObserver = selectionObserver(_ :)
             super.addSubview(view)
-            if !noSelectionAllowed && views.count == 1 {
+            if !noSelectionAllowed && typeCastedSubviews.count == 1 {
                 selectIfNeeded(true, at: 0)
             }
         } else {
@@ -85,7 +80,7 @@ public class SelectableStackView: UIStackView {
         if let view = view as? SelectionObservableView {
             view.selectionObserver = selectionObserver(_ :)
             super.addArrangedSubview(view)
-            if !noSelectionAllowed && views.count == 1 {
+            if !noSelectionAllowed && typeCastedSubviews.count == 1 {
                 selectIfNeeded(true, at: 0)
             }
         } else {
@@ -100,7 +95,7 @@ public class SelectableStackView: UIStackView {
     public override func removeArrangedSubview(_ view: UIView) {
         if let view = view as? SelectionObservableView {
             view.selectionObserver = nil
-            if !noSelectionAllowed && numberOfViesSelected == 0 && views.count > 0 {
+            if !noSelectionAllowed && numberOfViewsSelected == 0 && typeCastedSubviews.count > 0 {
                 if let latest = latestAccessedIndex {
                     select(true, at: latest)
                 } else {
@@ -125,12 +120,16 @@ public class SelectableStackView: UIStackView {
     // MARK: - Private -
     private var latestAccessedIndex: Index?
     
-    private var numberOfViesSelected: Int {
-        views.filter { $0.isSelected }.count
+    private var typeCastedSubviews: [SelectionObservableView] {
+        subviews as! [SelectionObservableView]
+    }
+    
+    private var numberOfViewsSelected: Int {
+        typeCastedSubviews.filter { $0.isSelected }.count
     }
     
     deinit {
-        views.forEach {
+        typeCastedSubviews.forEach {
             $0.selectionObserver = nil
         }
     }
@@ -143,16 +142,16 @@ public class SelectableStackView: UIStackView {
     }
     
     private func completeSelect(_ selectable: SelectableView) {
-        if numberOfViesSelected == 0 && !noSelectionAllowed {
+        if numberOfViewsSelected == 0 && !noSelectionAllowed {
             selectIfNeeded(true, selectable)
-        } else if numberOfViesSelected > 1 && !multipleSelectionAllowed {
+        } else if numberOfViewsSelected > 1 && !multipleSelectionAllowed {
             selectLatest(false)
         }
     }
     
     private func forcedlySelect(_ selectable: SelectableView) {
-        if selectable.isSelected && numberOfViesSelected == 1 && !noSelectionAllowed {
-            logIfLogging("Deselect \(selectable) failed, because no other views selected yet and no selection is disallowed")
+        if selectable.isSelected && numberOfViewsSelected == 1 && !noSelectionAllowed {
+            logIfLogging("Deselect failed, because no other views selected yet and no selection is disallowed")
             return
         }
         
