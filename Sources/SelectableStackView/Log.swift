@@ -2,7 +2,7 @@
 
 import Foundation
 
-fileprivate let logDomain: String = "SingleSelectableStackView"
+fileprivate let logDomain: String = "SelectableStackView"
 
 func log(_ message: String) {
     print("[\(logDomain): \(message)]")
