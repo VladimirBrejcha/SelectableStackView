@@ -1,3 +1,56 @@
-# SingleSelectableStackView
+# SelectableStackView
 
-A description of this package.
+SelectableStackView is a customizable and easy to use UI element for showing and managing selectable elements in a stack written in Swift.
+
+![Preview](https://github.com/VladimirBrejcha/LoadingViewExample/blob/master/LoadingViewExample/preview.gif)
+
+## Features
+
+- [x] Supports any number of elements
+- [x] Supports any type of elements given that it should conform to SelectionObservableView protocol
+- [x] Automatically manages elements
+- [x] Allows to manually manage elements if needed
+- [x] Supports single/multiple selection states
+- [x] Can automatically handle zero selection case
+- [x] Use in code or from interface builder
+
+## Requirements
+
+- iOS 10.0+
+- Xcode 11+
+- Swift 5.2+
+
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+
+Use Xcode’s new Swift Packages option, which is located within the File menu.
+
+## Usage example
+
+[ExampleApp](https://github.com/VladimirBrejcha/LoadingViewExample)
+
+```Swift
+import SelectableStackView
+```
+
+## Advanced
+
+### Use your own animations instead of default PulsingCircleAnimation
+
+Create an animation and conform it to the [Animation](Sources/LoadingView/Animation.swift) protocol.
+Set the loadingAnimation property.
+```Swift
+loadingView.loadingAnimation = MyAnimation() // must conform to Animation protocol
+```
+
+### Turn off logging
+
+```Swift
+selectableStackView.loggingEnabled = false // disable logging if needed
+```
+
+
+## License
+
+SelectableStackView is released under the MIT license. [See LICENSE](LICENSE) for details.

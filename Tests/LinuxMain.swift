@@ -3,5 +3,7 @@ import XCTest
 import SingleSelectableStackViewTests
 
 var tests = [XCTestCaseEntry]()
-tests += SingleSelectableStackViewTests.allTests()
+tests += SelectableStackViewSelectionTests.allTests()
+tests += SelectableStackViewPropertyTests.allTests()
+tests += SelectableStackViewInitialisationTests.allTests()
 XCTMain(tests)
