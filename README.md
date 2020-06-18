@@ -13,6 +13,7 @@ SelectableStackView is a customizable and easy to use UI element for showing and
 - [x] Supports single/multiple selection states
 - [x] Can automatically handle no selection case
 - [x] Use in code or from interface builder
+- [x] Has a delegate to observe selection
 
 ## Requirements
 
@@ -42,6 +43,26 @@ selectableStackView.addArrangedSubview(yourView) // make sure that your view con
 import SelectableStackView
 
 selectableStackView.select(true, at: someIndex) // if view at given index doesnt exist, nothing will happen
+```
+
+### Receive selection events
+```Swift
+import SelectableStackView
+
+// 1. Conform to SelectableStackViewDelegate protocol
+class SomeClass: SelectableStackViewDelegate {
+    let selectableStackView = SelectableStackView()
+    
+    init() {
+        // 2. Set delegate
+        selectableStackView.delegate = self
+    }
+    
+    // MARK: - SelectableStackViewDelegate
+    func didSelect(_ select: Bool, at index: Index, on selectableStackView: SelectableStackView) {
+        // handle selection
+    }
+}
 ```
 
 ## Advanced
