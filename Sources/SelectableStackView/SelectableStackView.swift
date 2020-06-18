@@ -118,6 +118,9 @@ public class SelectableStackView: UIStackView {
             return
         }
         forcedlySelect(select, selectable)
+        if let index = typeCastedSubviews.firstIndex(where: { $0 == selectable }) {
+            delegate?.didSelect(selectable.isSelected, at: index, on: self)
+        }
         latestAccessedIndex = index
     }
     
