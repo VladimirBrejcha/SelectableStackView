@@ -8,9 +8,9 @@ public protocol SelectableView: UIView {
 }
 
 /// Represents a `SelectableView` that has an observer
-public protocol SelectionObservableView: SelectableView {
+public protocol ObservableBySelectableStackView: SelectableView {
     /// An observer that should be informed every time the view is about to be selected or deselected
-    var selectionObserver: ((SelectionObservableView) -> Void)? { get set }
+    var selectionObserver: ((ObservableBySelectableStackView) -> Void)? { get set }
     /// Declares if the view taking care of select/deselect itself
     /// Set to `true` if the view is selecting/deselecting itself just before notifying observer
     /// Set to `false` if the view will inform observer about selection but won't change its `isSelected` state itself
