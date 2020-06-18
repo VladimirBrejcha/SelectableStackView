@@ -36,12 +36,10 @@ class SelectableStackViewInitialisationTests: XCTestCase {
         XCTAssertTrue(button3.isSelected == false)
     }
     
-    
-    // Commented out to supress the warning
     func testDeinit() {
-//        let button1 = SelectableButton()
-//        let button2 = SelectableButton()
-//        weak var stackView = SelectableStackView(arrangedSubviews: [button1, button2])
-//        XCTAssertTrue(stackView == nil)
+        let button1 = SelectableButton()
+        let button2 = SelectableButton()
+        weak var stackView = SelectableStackView(arrangedSubviews: [button1, button2])
+        XCTAssertTrue(stackView == nil)
     }
 }

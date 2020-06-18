@@ -90,7 +90,8 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverSingleSelection() {
-        let (_, button1, button2, button3) = makeStackWithSubviews(with: singleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSubviews(with: singleSelection)
+        
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -106,7 +107,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverSingleSelectionSelfHandling() {
-        let (_, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: singleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: singleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -122,7 +123,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverMultipleSelection() {
-        let (_, button1, button2, button3) = makeStackWithSubviews(with: multipleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSubviews(with: multipleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -138,7 +139,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverMultipleSelectionSelfHandling() {
-        let (_, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: multipleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: multipleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -154,7 +155,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverNoSelectionSingleSelection() {
-        let (_, button1, button2, button3) = makeStackWithSubviews(with: noSelectionAndSingleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSubviews(with: noSelectionAndSingleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -170,7 +171,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverNoSelectionSingleSelectionSelfHandling() {
-        let (_, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: noSelectionAndSingleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSelfHandlingSubviews(with: noSelectionAndSingleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
@@ -186,7 +187,7 @@ class SelectableStackViewSelectionTests: XCTestCase {
     }
     
     func testObserverNoSelectionMultipleSelection() {
-        let (_, button1, button2, button3) = makeStackWithSubviews(with: noSelectionAndMultipleSelection)
+        let (stackView, button1, button2, button3) = makeStackWithSubviews(with: noSelectionAndMultipleSelection)
         button1.touchUp()
         XCTAssertTrue(button1.isSelected == true)
         XCTAssertTrue(button2.isSelected == false)
