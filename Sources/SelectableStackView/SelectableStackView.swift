@@ -6,6 +6,7 @@ public typealias Index = Int
 
 @IBDesignable
 public class SelectableStackView: UIStackView {
+    weak var delegate: SelectableStackViewDelegate?
     /// Declares if state with no selected views allowed
     /// If set to `false` latest selected view will not be allowed to be deselected
     /// If set to `false` first view will be automatically selected on `addArrangedSubview`
@@ -46,13 +47,13 @@ public class SelectableStackView: UIStackView {
     
     /// Access arrangedSubview at `index`
     /// Returns subview with given index or nil
-    public subscript(index: Index) -> SelectionObservableView? {
+    public subscript(index: Index) -> ObservableBySelectableStackView? {
         typeCastedSubviews.indices.contains(index) ? typeCastedSubviews[index] : nil
     }
     
     /// Access `index` of the `view`
     /// Returns index of given subview or nil
-    public subscript(view: SelectionObservableView) -> Index? {
+    public subscript(view: ObservableBySelectableStackView) -> Index? {
         typeCastedSubviews.firstIndex { $0 == view }
     }
     
@@ -61,8 +62,8 @@ public class SelectableStackView: UIStackView {
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
     /// Subscribes to `SelectionObservableView` `selectionObserver`
     public override func addSubview(_ view: UIView) {
-        if let view = view as? SelectionObservableView {
-            view.selectionObserver = selectionObserver(_ :)
+        if let view = view as? ObservableBySelectableStackView {
+            view.observer = selectionObserver(_ :)
             super.addSubview(view)
             if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
@@ -78,8 +79,8 @@ public class SelectableStackView: UIStackView {
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
     /// Subscribes to `SelectionObservableView` `selectionObserver`
     public override func addArrangedSubview(_ view: UIView) {
-        if let view = view as? SelectionObservableView {
-            view.selectionObserver = selectionObserver(_ :)
+        if let view = view as? ObservableBySelectableStackView {
+            view.observer = selectionObserver(_ :)
             super.addArrangedSubview(view)
             if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
@@ -95,8 +96,8 @@ public class SelectableStackView: UIStackView {
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select latest accessed view (or first view if no views accessed yet)
     /// Unsubscribes from `SelectionObservableView` `selectionObserver`
     public override func removeArrangedSubview(_ view: UIView) {
-        if let view = view as? SelectionObservableView {
-            view.selectionObserver = nil
+        if let view = view as? ObservableBySelectableStackView {
+            view.observer = nil
             if !noSelectionAllowed && numberOfViewsSelected == 0 && typeCastedSubviews.count > 0 {
                 if let latest = latestAccessedIndex {
                     select(true, at: latest)
@@ -123,8 +124,8 @@ public class SelectableStackView: UIStackView {
     // MARK: - Private -
     private var latestAccessedIndex: Index?
     
-    private var typeCastedSubviews: [SelectionObservableView] {
-        subviews as! [SelectionObservableView]
+    private var typeCastedSubviews: [ObservableBySelectableStackView] {
+        subviews as! [ObservableBySelectableStackView]
     }
     
     private var numberOfViewsSelected: Int {
@@ -133,14 +134,19 @@ public class SelectableStackView: UIStackView {
     
     deinit {
         typeCastedSubviews.forEach {
-            $0.selectionObserver = nil
+            $0.observer = nil
         }
     }
     
-    private func selectionObserver(_ selectable: SelectionObservableView) {
+    private func selectionObserver(_ selectable: ObservableBySelectableStackView) {
         selectable.handlingSelfSelection
             ? completeSelect(selectable)
             : forcedlySelect(!selectable.isSelected, selectable)
+        
+        if let index = typeCastedSubviews.firstIndex(where: { $0 == selectable }) {
+            delegate?.didSelect(selectable.isSelected, at: index, on: self)
+        }
+        
         latestAccessedIndex = self[selectable]
     }
     

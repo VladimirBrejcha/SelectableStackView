@@ -1,8 +1,10 @@
-//
-//  File.swift
-//  
-//
-//  Created by Владимир Королев on 18.06.2020.
-//
+//  Copyright © 2020 VladimirBrejcha. All rights reserved.
 
-import Foundation
+/// Delegate protocol used by the `SelectableStackView` class
+public protocol SelectableStackViewDelegate: AnyObject {
+    /// Called every time any `SelectableStackView` subview changed it's `isSelected` state
+    func didSelect(_ select: Bool,
+                   at index: Index,
+                   on selectableStackView: SelectableStackView
+    )
+}

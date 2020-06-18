@@ -1,7 +1,5 @@
 //  Copyright © 2020 VladimirBrejcha. All rights reserved.
 
-import UIKit
-
 /// Represents a `SelectableView` that might be observed by an `SelectableStackView`
 public protocol ObservableBySelectableStackView: SelectableView {
     /// An observer that should be informed every time the view is about to be selected or deselected
