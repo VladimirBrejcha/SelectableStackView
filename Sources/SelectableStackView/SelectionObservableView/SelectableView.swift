@@ -1,8 +1,8 @@
-//
-//  File.swift
-//  
-//
-//  Created by Владимир Королев on 18.06.2020.
-//
+//  Copyright © 2020 VladimirBrejcha. All rights reserved.
 
-import Foundation
+import UIKit
+
+/// Represents a `UIView` that could be selected
+public protocol SelectableView: UIView {
+    var isSelected: Bool { get set }
+}
