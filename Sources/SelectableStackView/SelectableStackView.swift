@@ -6,7 +6,7 @@ public typealias Index = Int
 
 @IBDesignable
 public class SelectableStackView: UIStackView {
-    weak var delegate: SelectableStackViewDelegate?
+    public weak var delegate: SelectableStackViewDelegate?
     /// Declares if state with no selected views allowed
     /// If set to `false` latest selected view will not be allowed to be deselected
     /// If set to `false` first view will be automatically selected on `addArrangedSubview`
