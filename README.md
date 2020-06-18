@@ -68,9 +68,17 @@ class SomeClass: SelectableStackViewDelegate {
 ## Advanced
 
 ### Turn off logging
-
 ```Swift
 selectableStackView.loggingEnabled = false // disable logging if needed
+```
+
+### Turn off delegate notifications on self selection
+```Swift
+import SelectableStackView
+
+class SomeClass: SelectableStackViewDelegate {
+    var shouldNotifyAboutSelfSelection: Bool { true }
+}
 ```
 
 ## License
