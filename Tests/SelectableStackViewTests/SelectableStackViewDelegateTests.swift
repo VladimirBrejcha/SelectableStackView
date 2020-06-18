@@ -5,7 +5,8 @@ import XCTest
 
 class SelectableStackViewDelegateTests: XCTestCase {
     static var allTests = [
-        ("testSelectionFromButton", testSelectionFromButton)
+        ("testSelectionFromButton", testSelectionFromButton),
+        ("testSelectionFromStack", testSelectionFromStack)
     ]
     
     class SelectableStackViewDelegateRealisation: SelectableStackViewDelegate {
@@ -46,6 +47,37 @@ class SelectableStackViewDelegateTests: XCTestCase {
         stackView.noSelectionAllowed = true
         
         button1.touchUp()
+        
+        XCTAssertTrue(selectedIndex == 0)
+        XCTAssertTrue(selectedValue == false)
+    }
+    
+    func testSelectionFromStack() {
+        let (stackView, _, _, _) = makeStackWithSubviews(with: singleSelection)
+        var selectedIndex: Int = -1
+        var selectedValue: Bool = false
+        let delegate = SelectableStackViewDelegateRealisation { selected, index, stackView2 in
+            print("Delegate called with \(selected) at \(index)")
+            XCTAssertTrue(stackView == stackView2)
+            XCTAssertTrue(stackView === stackView2)
+            selectedIndex = index
+            selectedValue = selected
+        }
+        stackView.delegate = delegate
+        
+        stackView.select(true, at: 1)
+        
+        XCTAssertTrue(selectedIndex == 1)
+        XCTAssertTrue(selectedValue == true)
+        
+        stackView.select(true, at: 0)
+        
+        XCTAssertTrue(selectedIndex == 0)
+        XCTAssertTrue(selectedValue == true)
+        
+        stackView.noSelectionAllowed = true
+        
+        stackView.select(false, at: 0)
         
         XCTAssertTrue(selectedIndex == 0)
         XCTAssertTrue(selectedValue == false)
