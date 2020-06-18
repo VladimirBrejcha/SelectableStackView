@@ -5,7 +5,8 @@ public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(SelectableStackViewSelectionTests.allTests),
         testCase(SelectableStackViewInitialisationTests.allTests),
-        testCase(SelectableStackViewPropertyTests.allTests)
+        testCase(SelectableStackViewPropertyTests.allTests),
+        testCase(SelectableStackViewSelectionTests.allTests)
     ]
 }
 #endif
