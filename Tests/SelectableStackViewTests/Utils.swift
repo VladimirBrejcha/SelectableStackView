@@ -3,22 +3,22 @@
 import UIKit
 @testable import SelectableStackView
 
-class SelectableButton: UIButton, SelectionObservableView {
-    var selectionObserver: ((SelectionObservableView) -> Void)?
+class SelectableButton: UIButton, ObservableBySelectableStackView {
+    var observer: ((ObservableBySelectableStackView) -> Void)?
     var handlingSelfSelection: Bool = false
     
     func touchUp() {
-        selectionObserver?(self)
+        observer?(self)
     }
 }
 
-class SelfSelectingSelectableButton: UIButton, SelectionObservableView {
-    var selectionObserver: ((SelectionObservableView) -> Void)?
+class SelfSelectingSelectableButton: UIButton, ObservableBySelectableStackView {
+    var observer: ((ObservableBySelectableStackView) -> Void)?
     var handlingSelfSelection: Bool = true
     
     func touchUp() {
         isSelected.toggle()
-        selectionObserver?(self)
+        observer?(self)
     }
 }
 
