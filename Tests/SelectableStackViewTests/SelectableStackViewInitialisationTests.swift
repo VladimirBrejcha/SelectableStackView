@@ -7,7 +7,8 @@ class SelectableStackViewInitialisationTests: XCTestCase {
     static var allTests = [
         ("testInit", testInit),
         ("testInitAddSelection", testInitAddSelection),
-        ("testInitAddNoSelection", testInitAddNoSelection)
+        ("testInitAddNoSelection", testInitAddNoSelection),
+        ("testDeinit", testDeinit)
     ]
     
     func testInit() {
@@ -33,5 +34,12 @@ class SelectableStackViewInitialisationTests: XCTestCase {
         XCTAssertTrue(button1.isSelected == false)
         XCTAssertTrue(button2.isSelected == false)
         XCTAssertTrue(button3.isSelected == false)
+    }
+    
+    func testDeinit() {
+        let button1 = SelectableButton()
+        let button2 = SelectableButton()
+        weak var stackView = SelectableStackView(arrangedSubviews: [button1, button2])
+        XCTAssertTrue(stackView == nil)
     }
 }
