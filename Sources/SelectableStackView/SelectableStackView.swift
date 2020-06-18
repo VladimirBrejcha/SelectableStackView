@@ -63,7 +63,9 @@ public class SelectableStackView: UIStackView {
     /// Subscribes to `SelectionObservableView` `selectionObserver`
     public override func addSubview(_ view: UIView) {
         if let view = view as? ObservableBySelectableStackView {
-            view.observer = selectionObserver(_ :)
+            view.observer = { [weak self] selectable in
+                self?.selectionObserver(selectable)
+            }
             super.addSubview(view)
             if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
@@ -80,7 +82,9 @@ public class SelectableStackView: UIStackView {
     /// Subscribes to `SelectionObservableView` `selectionObserver`
     public override func addArrangedSubview(_ view: UIView) {
         if let view = view as? ObservableBySelectableStackView {
-            view.observer = selectionObserver(_ :)
+            view.observer = { [weak self] selectable in
+                self?.selectionObserver(selectable)
+            }
             super.addArrangedSubview(view)
             if !noSelectionAllowed && numberOfViewsSelected == 0 {
                 selectIfNeeded(true, at: 0)
