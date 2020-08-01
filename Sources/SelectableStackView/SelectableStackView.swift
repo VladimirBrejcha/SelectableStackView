@@ -58,9 +58,9 @@ open class SelectableStackView: UIStackView {
     }
     
     /// Add `view` to subviews
-    /// View must conform to `SelectionObservableView`
+    /// View must conform to `ObservableBySelectableStackView`
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
-    /// Subscribes to `SelectionObservableView` `selectionObserver`
+    /// Subscribes to `ObservableBySelectableStackView` `observer`
     public override func addSubview(_ view: UIView) {
         if let view = view as? ObservableBySelectableStackView {
             view.observer = { [weak self] selectable in
@@ -77,9 +77,9 @@ open class SelectableStackView: UIStackView {
     }
     
     /// Add `view` to arrangedSubviews
-    /// View must conform to `SelectionObservableView`
+    /// View must conform to `ObservableBySelectableStackView`
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
-    /// Subscribes to `SelectionObservableView` `selectionObserver`
+    /// Subscribes to `ObservableBySelectableStackView` `observer`
     public override func addArrangedSubview(_ view: UIView) {
         if let view = view as? ObservableBySelectableStackView {
             view.observer = { [weak self] selectable in
@@ -96,9 +96,9 @@ open class SelectableStackView: UIStackView {
     }
     
     /// Remove `view` from arrangedSubviews
-    /// View must conform to `SelectionObservableView`
+    /// View must conform to `ObservableBySelectableStackView`
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select latest accessed view (or first view if no views accessed yet)
-    /// Unsubscribes from `SelectionObservableView` `selectionObserver`
+    /// Unsubscribes from `ObservableBySelectableStackView` `observer`
     public override func removeArrangedSubview(_ view: UIView) {
         if let view = view as? ObservableBySelectableStackView {
             view.observer = nil
