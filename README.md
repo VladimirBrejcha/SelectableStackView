@@ -35,7 +35,7 @@ Use Xcode’s new Swift Packages option, which is located within the File menu.
 ```Swift
 import SelectableStackView
 
-selectableStackView.addArrangedSubview(yourView) // make sure that your view conform to SelectionObservableView protocol
+selectableStackView.addArrangedSubview(yourView) // make sure that your view conform to ObservableBySelectableStackView protocol
 ```
 
 ### Select an view from code
