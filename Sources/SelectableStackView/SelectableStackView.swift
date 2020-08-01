@@ -5,7 +5,7 @@ import UIKit
 public typealias Index = Int
 
 @IBDesignable
-public class SelectableStackView: UIStackView {
+open class SelectableStackView: UIStackView {
     public weak var delegate: SelectableStackViewDelegate?
     /// Declares if state with no selected views allowed
     /// If set to `false` latest selected view will not be allowed to be deselected
