@@ -42,13 +42,14 @@ open class SelectableStackView: UIStackView {
     }
     
     /// Declares if the view will select subview with given index after initialisation
+    /// Should be used only from Interface Builder
     /// Default is `nil`
+    @available(*, unavailable, message: "This property is reserved for Interface Builder. Use 'initiallySelectedIndex' instead.")
     @IBInspectable
-    public var initiallySelectedIndex: Index? {
-        didSet {
-            if let index = initiallySelectedIndex,
-                latestAccessedIndex == nil {
-                select(true, at: index)
+    public var initiallySelectedIndexIB: NSNumber? {
+        willSet {
+            if let index = newValue {
+                initialIndex = Index(truncating: index)
             }
         }
     }
@@ -67,6 +68,16 @@ open class SelectableStackView: UIStackView {
     /// Returns index of given subview or nil
     public subscript(view: ObservableBySelectableStackView) -> Index? {
         typeCastedSubviews.firstIndex { $0 == view }
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        sharedInit()
+    }
+    
+    public required init(coder: NSCoder) {
+        super.init(coder: coder)
+        sharedInit()
     }
     
     /// Add `view` to subviews
@@ -144,6 +155,7 @@ open class SelectableStackView: UIStackView {
     
     // MARK: - Private -
     private var latestAccessedIndex: Index?
+    private var initialIndex: Index?
     
     private var typeCastedSubviews: [ObservableBySelectableStackView] {
         subviews as! [ObservableBySelectableStackView]
@@ -226,6 +238,13 @@ open class SelectableStackView: UIStackView {
     private func logIfLogging(_ message: String) {
         if loggingEnabled {
             log(message)
+        }
+    }
+    
+    private func sharedInit() {
+        if let initialIndex = initialIndex,
+            self[initialIndex] != nil {
+            select(true, at: initialIndex)
         }
     }
 }
