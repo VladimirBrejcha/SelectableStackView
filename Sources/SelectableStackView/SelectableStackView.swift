@@ -155,7 +155,15 @@ open class SelectableStackView: UIStackView {
     
     // MARK: - Private -
     private var latestAccessedIndex: Index?
-    private var initialIndex: Index?
+    
+    private var initialIndex: Index? {
+        didSet {
+            if let initialIndex = initialIndex,
+                latestAccessedIndex == nil {
+                select(true, at: initialIndex)
+            }
+        }
+    }
     
     private var typeCastedSubviews: [ObservableBySelectableStackView] {
         subviews as! [ObservableBySelectableStackView]
@@ -227,25 +235,6 @@ open class SelectableStackView: UIStackView {
         }
         
         selectIfNeeded(select, view)
-    }
-    
-    private func selectIfNeeded(_ select: Bool, _ selectable: SelectableView) {
-        if selectable.isSelected != select {
-            selectable.isSelected = select
-        }
-    }
-    
-    private func logIfLogging(_ message: String) {
-        if loggingEnabled {
-            log(message)
-        }
-    }
-    
-    private func sharedInit() {
-        if let initialIndex = initialIndex,
-            self[initialIndex] != nil {
-            select(true, at: initialIndex)
-        }
     }
 }
 
