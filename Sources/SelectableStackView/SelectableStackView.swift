@@ -42,8 +42,8 @@ public class SelectableStackView: UIStackView {
     }
     
     /// Log unexpected behavior
-    /// Default is `true`
-    public var loggingEnabled: Bool = true
+    /// Default is `false`
+    public var loggingEnabled: Bool = false
     
     /// Access arrangedSubview at `index`
     /// Returns subview with given index or nil
