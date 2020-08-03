@@ -41,6 +41,18 @@ public class SelectableStackView: UIStackView {
         }
     }
     
+    /// Declares if the view will select subview with given index after initialisation
+    /// Default is `nil`
+    @IBInspectable
+    public var initiallySelectedIndex: Index? {
+        didSet {
+            if let index = initiallySelectedIndex,
+                latestAccessedIndex == nil {
+                select(true, at: index)
+            }
+        }
+    }
+    
     /// Log unexpected behavior
     /// Default is `false`
     public var loggingEnabled: Bool = false
