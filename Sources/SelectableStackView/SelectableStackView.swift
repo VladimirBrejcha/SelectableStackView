@@ -70,16 +70,6 @@ open class SelectableStackView: UIStackView {
         typeCastedSubviews.firstIndex { $0 == view }
     }
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        sharedInit()
-    }
-    
-    public required init(coder: NSCoder) {
-        super.init(coder: coder)
-        sharedInit()
-    }
-    
     /// Add `view` to subviews
     /// View must conform to `ObservableBySelectableStackView`
     /// If `noSelectionAllowed` is `false` and no views are selected, will automatically select first view
@@ -235,6 +225,18 @@ open class SelectableStackView: UIStackView {
         }
         
         selectIfNeeded(select, view)
+    }
+    
+    private func selectIfNeeded(_ select: Bool, _ selectable: SelectableView) {
+        if selectable.isSelected != select {
+            selectable.isSelected = select
+        }
+    }
+    
+    private func logIfLogging(_ message: String) {
+        if loggingEnabled {
+            log(message)
+        }
     }
 }
 
