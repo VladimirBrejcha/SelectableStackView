@@ -46,11 +46,9 @@ open class SelectableStackView: UIStackView {
     /// Default is `nil`
     @available(*, unavailable, message: "This property is reserved for Interface Builder. Use 'initiallySelectedIndex' instead.")
     @IBInspectable
-    public var initiallySelectedIndexIB: NSNumber? {
+    public var initiallySelectedIndexIB: NSNumber = 0 {
         willSet {
-            if let index = newValue {
-                initialIndex = Index(truncating: index)
-            }
+            initialIndex = Index(truncating: newValue)
         }
     }
     
